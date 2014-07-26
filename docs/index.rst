@@ -10,8 +10,6 @@ Contents:
 
 .. toctree::
    :maxdepth: 2
-   core_exceptions
-   core_handlers_application
 
 Indices and tables
 ==================
@@ -19,4 +17,3 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
-

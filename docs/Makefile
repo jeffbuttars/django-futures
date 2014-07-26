@@ -6,6 +6,8 @@ DJF_SRCDIR := ../src/django_futures
 # Output path for sphinx-apidocs 
 DJF_OUTDIR := djf
 
+.DEFAULT_GOAL := all
+
 # You can set these variables from the command line.
 SPHINXOPTS    =
 SPHINXBUILD   = sphinx-build
