@@ -8,8 +8,8 @@ from tornado.concurrent import TracebackFuture
 from django.conf import settings
 from django.http.response import StreamingHttpResponse
 
-from django_tornado.core.handlers.dj_staticfiles import StaticFilesHandler
-from django_tornado.core.handlers.dj_tornado import TornadoHandler
+from django_tornado.core.handlers.df_staticfiles import StaticFilesHandler
+from django_tornado.core.handlers.df import TornadoHandler
 
 
 class DjangoTornadoRequestHandler(tornado.web.RequestHandler):

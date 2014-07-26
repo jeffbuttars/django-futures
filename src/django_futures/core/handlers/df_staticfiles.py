@@ -4,7 +4,7 @@ import logging
 
 from django.conf import settings
 from django.http import Http404
-from django_futures.core.handlers.dj_tornado import TornadoHandler
+from django_futures.core.handlers.df import TornadoHandler
 from django.utils.six.moves.urllib.parse import urlparse
 from django.utils.six.moves.urllib.request import url2pathname
 

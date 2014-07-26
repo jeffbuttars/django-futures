@@ -6,7 +6,6 @@ import tornado.httpserver
 import tornado.ioloop
 import tornado.wsgi
 from django.conf import settings
-# import django.core.handlers.wsgi
 from django.core.management.base import BaseCommand
 from django_futures.core.handlers.application import DjangoApplication
 
