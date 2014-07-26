@@ -1,5 +1,10 @@
 # Makefile for Sphinx documentation
 #
+# 
+# Source path for sphinx-apidocs 
+DJF_SRCDIR := ../src/django_futures
+# Output path for sphinx-apidocs 
+DJF_OUTDIR := djf
 
 # You can set these variables from the command line.
 SPHINXOPTS    =
@@ -45,6 +50,11 @@ help:
 	@echo "  pseudoxml  to make pseudoxml-XML files for display purposes"
 	@echo "  linkcheck  to check all external links for integrity"
 	@echo "  doctest    to run all doctests embedded in the documentation (if enabled)"
+
+all: djf html
+
+djf:
+	sphinx-apidoc -o $(DJF_OUTDIR) $(DJF_SRCDIR)
 
 clean:
 	rm -rf $(BUILDDIR)/*
