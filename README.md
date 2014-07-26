@@ -1,10 +1,11 @@
-django-tornado
+Django Futures
 ==============
 
-Tornado integration for Django
+Asynchronous request support for Django. 
+
 
 This is currently in heavy development and the master branch is 
-in now way stable and won't be for a little while.
+in no way stable and won't be for a little while.
 
 # Features
 * Use Tornado directly with Django (NO WSGI)
@@ -22,13 +23,13 @@ in now way stable and won't be for a little while.
 * More to Come!
 
 # Implemented
-* Use Tornado directly with Django (NO WSGI)
 * `manage.py run_tornado` command
+    * Run production Django server instance(s) directly from the `manage.py` script. No need for Gunicorn and other WSGI services.
 
 
 # TODO
-* Support Tornado's `gen.coroutine` decorator on Django views
-* Run production Django server instance(s) directly from the `manage.py` script. No need for Gunicorn and other WSGI services.
 * Enable fully asynchronous Django views!
+    * Support Tornado's `gen.coroutine` decorator on Django views
+        * Initial is done and works but is still crude.
 * Enable asynchronous tasks easily without using an external service like Celery.
 * Enable asynchronous timers to execute code at a given time or interval.
