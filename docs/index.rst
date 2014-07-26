@@ -1,21 +1,22 @@
-.. title:: Django Futures - Asynchronous Django
+.. DjangoFutures documentation master file, created by
+   sphinx-quickstart on Fri Jul 25 21:14:57 2014.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
 
-Django Futures
-==============
+Welcome to DjangoFutures's documentation!
+=========================================
 
-`Django <http://www.django.org>`_ Futures is a
-`Django <http://www.django.org>` app that allows your views to be asynchronous
-request handlers utilizing the `Tornado <http://www.tornadoweb.org>`_
-asynchronous web server.
-
-Quick links
------------
-
-* :doc:`Documentation <documentation>`
-* |Download current version|: :current_tarball:`z` (:doc:`release notes <releases>`)
-* `Source (github) <https://github.com/jeffbuttars/django-futures>`_
+Contents:
 
 .. toctree::
-   :hidden:
+   :maxdepth: 2
+   core_exceptions
+   core_handlers_application
 
-   documentation
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
+
