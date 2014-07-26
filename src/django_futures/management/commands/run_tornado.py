@@ -40,10 +40,13 @@ DEFAULT_PORT = "8000"
 
 # Use the builtin runserver command as our base
 class Command(RSCommand):
+    """
+    run_tornado
+    """
 
     def get_handler(self, *args, **options):
         """
-        Returns the default WSGI handler for the runner.
+        Returns an Application instance for the Tornado server
         """
 
         app_kwargs = {
