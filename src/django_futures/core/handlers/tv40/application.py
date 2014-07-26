@@ -3,10 +3,10 @@ import logging
 logger = logging.getLogger('django.debug')
 
 
-class DjangoTornadoRequestHandler(object):
+class DjangoFuturesRequestHandler(object):
     """Docstring for DjangoTornadoRequestHandler """
     pass
-# DjangoTornadoRequestHandler
+# DjangoFuturesRequestHandler
 
 
 class DjangoApplication(object):

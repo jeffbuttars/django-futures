@@ -52,7 +52,7 @@ class LimitedStream(object):
         self.buffer = sio.read()
         return line
 
-from django_tornado.core.exceptions import TornadoVersionNotSupported
+from django_futures.core.exceptions import TornadoVersionNotSupported
 
 import tornado
 tornado_version_major = tornado.version_info[0]
@@ -62,12 +62,12 @@ if tornado_version_major == 3:
     if tornado_version_minor != 2:
         raise TornadoVersionNotSupported(
             "Tornado version %s is not supported by DjangoTornado." % tornado.version)
-    from django_tornado.core.handlers.tv32.dj_tornado import TornadoRequest, TornadoHandler
+    from django_futures.core.handlers.tv32.df import TornadoRequest, TornadoHandler
 elif tornado_version_major == 4:
     if tornado_version_minor != 0:
         raise TornadoVersionNotSupported(
             "Tornado version %s is not supported by DjangoTornado." % tornado.version)
-    from django_tornado.core.handlers.tv40.dj_tornado import TornadoRequest, TornadoHandler
+    from django_futures.core.handlers.tv40.df import TornadoRequest, TornadoHandler
 else:
     raise TornadoVersionNotSupported(
         "Tornado version %s is not supported by DjangoTornado." % tornado.version)

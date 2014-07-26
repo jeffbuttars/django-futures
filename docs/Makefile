@@ -60,6 +60,7 @@ djf:
 
 clean:
 	rm -rf $(BUILDDIR)/*
+	rm -rf djf
 
 html:
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html

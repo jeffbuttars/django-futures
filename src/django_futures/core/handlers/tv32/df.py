@@ -28,7 +28,7 @@ except ImportError:
     class RemovedInDjango19Warning(PendingDeprecationWarning):
         pass
 
-from django_tornado.core.handlers.dj_tornado import LimitedStream
+from django_futures.core.handlers.df import LimitedStream
 
 from django.utils.encoding import force_str, force_text
 # Do we need this? I hope not, but wsgi uses it.
