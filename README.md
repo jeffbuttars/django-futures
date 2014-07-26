@@ -1,7 +1,7 @@
-django-tornado
+Django Futures
 ==============
 
-Tornado integration for Django
+Asynchronous views and Tornado integration for Django
 
 This is currently in heavy development and the master branch is 
 in now way stable and won't be for a little while.
