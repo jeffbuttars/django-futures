@@ -1,3 +1,11 @@
+"""
+``django_futures.decorators.py``
+
+``decorators.py`` -- Simplifiy Asynchronous Code
+================================================
+
+"""
+
 import logging
 logger = logging.getLogger('django')
 
@@ -5,11 +13,11 @@ import functools
 from tornado.ioloop import IOLoop
 from tornado import gen
 
-
 class ttask(object):
-
-    """Run a task as a tornado callback. Greate for async background code.
-    If tornado is not running, then things are run synchronously."""
+    """
+    Run a task as a tornado callback. Greate for async background code.
+    If tornado is not running, then things are run synchronously.
+    """
     __name__ = "ttask"
 
     def __init__(self, *args, **kwargs):

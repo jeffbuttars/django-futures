@@ -1,3 +1,10 @@
+"""
+``django_futures.management.commands.run_tornado.py``
+
+``run_tornado.py`` -- ``run_tornado``
+===========================================
+"""
+
 from optparse import make_option
 import socket
 import re
@@ -11,8 +18,22 @@ from django.core.management.base import BaseCommand
 from django_futures.core.handlers.application import DjangoApplication
 
 
-# We monkey patch the built in run with our own Tornado based version
 def t_run(addr, port, t_app, ipv6=False, threading=False):
+    """
+    :param addr: IP Address the web server will listen on. Default is 8000
+    :type addr: int
+    :param port: Port the web server will listen on
+    :type port: int
+    :param t_app: DjangoApplication instance
+    :type t_app: `django_futures.core.handlers.application.DjangoApplication`
+    :param ipv6: Explicitly set addr as type IPv6
+    :type ipv6: bool
+    :param threading: Not Used
+    :type threading:
+
+    We monkey patch the built in ``run()`` with our own Tornado based version,
+    ``t_run()``.
+    """
 
     fam = socket.AF_UNSPEC
     if ipv6:
@@ -41,7 +62,7 @@ DEFAULT_PORT = "8000"
 # Use the builtin runserver command as our base
 class Command(RSCommand):
     """
-    run_tornado
+    ``run_tornado``
     """
 
     def get_handler(self, *args, **options):

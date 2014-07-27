@@ -56,7 +56,7 @@ help:
 all: djf html
 
 djf:
-	sphinx-apidoc -o $(DJF_OUTDIR) $(DJF_SRCDIR)
+	sphinx-apidoc -E -e -o $(DJF_OUTDIR) $(DJF_SRCDIR)
 
 clean:
 	rm -rf $(BUILDDIR)/*

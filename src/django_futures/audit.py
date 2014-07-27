@@ -1,4 +1,9 @@
 """
+``django_futures.audit.py``
+
+``autit.py`` -- Request and Task Auditing
+===============================================
+
 Enable auditing of decorators, what decorators run and HttpClient ops.
 
 Allow for realtime and delayed group commits. 

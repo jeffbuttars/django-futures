@@ -1,3 +1,17 @@
+"""
+``django_futures.http_client.py``
+
+``http_client.py`` -- Asynchronous HTTP Client
+==================
+
+This is a 'smart' HTTPClient wrapper that also makes requests
+a bit simpler by borrowing much from the 'requests' module.
+
+If a tornado IOLoop is running, then async requests are made.
+Otherwise, tornado's ``run_sync()`` method is used to make the
+calls synchronous.
+"""
+
 import logging
 logger = logging.getLogger('django')
 
@@ -5,16 +19,6 @@ import tornado
 import tornado.ioloop
 from tornado.httpclient import AsyncHTTPClient, HTTPClient as SyncHttpClient
 from tornado.httputil import url_concat
-
-
-"""
-This is a 'smart' HTTPClient wrapper that also makes requests
-a bit simpler by borrowing much from the 'requests' module.
-
-If a tornado IOLoop is running, then async requests are made.
-Otherwise, tornado's run_sync() method is used to make the
-calls synchronous.
-"""
 
 
 class HttpClient(object):
@@ -61,8 +65,8 @@ class HttpClient(object):
 
         :param url: arg description
         :type url: type description
-        :param *kwargs: arg description
-        :type *kwargs: type description
+        :param \*\*kwargs: arg description
+        :type \*\*kwargs: type description
         :return:
         :rtype:
         """
@@ -85,8 +89,8 @@ class HttpClient(object):
         :type data: type description
         :param params: arg description
         :type params: type description
-        :param *kwargs: arg description
-        :type *kwargs: type description
+        :param \*\*kwargs: arg description
+        :type \*\*kwargs: type description
         :return:
         :rtype:
         """
