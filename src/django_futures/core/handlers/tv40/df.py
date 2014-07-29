@@ -15,7 +15,7 @@ import codecs
 import warnings
 from io import BytesIO
 
-from tornado.concurrent import TracebackFuture
+from tornado.concurrent import TracebackFuture, is_future
 
 
 from django import http

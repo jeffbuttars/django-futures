@@ -129,9 +129,18 @@ class DjangoFuturesRequestHandler(tornado.web.RequestHandler):
 # DjangoFuturesRequestHandler
 
 
-# Looks like we'll need our own version of the tornado web Application class
-# to do this well.
-# Sat Jun  7 19:36:09 2014
+class _DjangoRequestDispatcher(web._RequestDispatcher):
+    """Docstring for _DjangoRequestDispatcher """
+
+    def _find_handler(self):
+        """
+        No need to 'find' a handler. We always call our Django
+        handler. Django will map it's own URIs to it's views.
+        """
+        app = self.application
+        self.handler_class = DjangoHandlerYo!!!
+# _DjangoRequestDispatcher
+
 class DjangoApplication(tornado.web.Application):
 
     def __init__(self, *args, **kwargs):
@@ -146,9 +155,9 @@ class DjangoApplication(tornado.web.Application):
                      args, kwargs)
 
         # Add our Django handler
-        self._django_handlers = [
-            (r'.*', DjangoFuturesRequestHandler),
-        ]
+        # self._django_handlers = [
+        #     (r'.*', DjangoFuturesRequestHandler),
+        # ]
 
         logger.debug("DjangoApplication::__init__() static_url: %s, static_path: %s",
                      settings.STATIC_URL, settings.STATIC_ROOT)
@@ -156,10 +165,19 @@ class DjangoApplication(tornado.web.Application):
         if kwargs.pop('static', None):
             kwargs['static_url_prefix'] = settings.STATIC_URL
             kwargs['static_path'] = settings.STATIC_ROOT
-                
+
         super(DjangoApplication, self).__init__(
-            self._django_handlers,
+            [],
             *args,
             **kwargs)
+        # super(DjangoApplication, self).__init__(
+        #     self._django_handlers,
+        #     *args,
+        #     **kwargs)
     # __init__()
+
+    def start_request(self, connection):
+        print("Application::start_request()")
+        # Modern HTTPServer interface
+        return _DjangoRequestDispatcher(self, connection)
 # DjangoApplication
