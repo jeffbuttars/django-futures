@@ -1,6 +1,6 @@
 import datetime
 from tornado import gen
-from django_tornado.http_client import HttpClient
+from django_futures.http_client import HttpClient
 from django.views.generic import TemplateView
 from core.views import BaseTemplateView
 
