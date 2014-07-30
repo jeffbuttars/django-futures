@@ -100,9 +100,11 @@ LOGGING = {
     'disable_existing_loggers': False,
     'formatters': {
         'verbose': {
-            'format': ('%(asctime)s %(levelname)s:%(process)s '
-                       '%(filename)s:%(lineno)s %(module)s::'
-                       '%(funcName)s() %(message)s'),
+            'format': (
+                '%(levelname)s: %(filename)s:%(lineno)s %(module)s::'
+                '%(funcName)s() '
+                '%(asctime)s %(process)s '
+                '%(message)s'),
         },
     },
     'filters': {
