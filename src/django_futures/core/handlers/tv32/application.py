@@ -1,3 +1,9 @@
+"""
+``application.py``
+=======================================
+
+`django_futures.core.handlers.tv32.application.py`
+"""
 import logging
 # logger = logging.getLogger('django.request')
 logger = logging.getLogger('django.debug')
@@ -73,10 +79,10 @@ class DjangoFuturesRequestHandler(tornado.web.RequestHandler):
     def django_handle_request(self, *args, **kwargs):
         """todo: Docstring for django_handle_request
 
-        :param *args: arg description
-        :type *args: type description
-        :param **kwargs: arg description
-        :type **kwargs: type description
+        :param \*args: arg description
+        :type \*args: type description
+        :param \*\*kwargs: arg description
+        :type \*\*kwargs: type description
         :return:
         :rtype:
         """
@@ -168,10 +174,10 @@ class DjangoApplication(tornado.web.Application):
     def __init__(self, *args, **kwargs):
         """todo: to be defined
         
-        :param *args: arg description
-        :type *args: type description
-        :param **kwargs: arg description
-        :type **kwargs: type description
+        :param \*args: arg description
+        :type \*args: type description
+        :param \*\*kwargs: arg description
+        :type \*\*kwargs: type description
         """
         logger.debug("DjangoApplication::__init__() args: %s, kwargs: %s",
                      args, kwargs)

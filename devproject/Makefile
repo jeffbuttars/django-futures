@@ -2,9 +2,9 @@
 SERVER_IP = localhost:8000
 .PHONY: reset run rundbg clean
 
-# Re-install django-tornado
+# Re-install django-futures
 reset:
-	-yes y | pip uninstall --exists-action=w django-tornado
+	-yes y | pip uninstall --exists-action=w django-futures
 	pip install --exists-action=w --pre --no-deps ../src/
 
 # run in production mode

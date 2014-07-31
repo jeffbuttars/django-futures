@@ -1,3 +1,10 @@
+"""
+``df_staticfiles.py`` -- Static Files Handler
+============================================
+
+`django_futures.core.handlers.df_staticfiles.py`
+"""
+
 import logging
 # logger = logging.getLogger('django.request')
 # logger = logging.getLogger('django.debug')
