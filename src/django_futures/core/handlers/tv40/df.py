@@ -55,7 +55,8 @@ class TornadoRequest(http.HttpRequest):
         :param t_req: arg description
         :type t_req: type description
         """
-        logger.debug("TornadoRequest::__init__ request: %s", t_req)
+        # logger.debug("TornadoRequest::__init__ request: %s", t_req)
+        logger.debug("TornadoRequest::__init__ request")
 
         self.tornado_request = t_req
         self._handler = handler
@@ -77,7 +78,8 @@ class TornadoRequest(http.HttpRequest):
         self.host = t_req.host
 
         self.META = t_headers
-        logger.debug("TornadoRequest::__init__ setting META %s", self.META)
+        # logger.debug("TornadoRequest::__init__ setting META %s", self.META)
+        logger.debug("TornadoRequest::__init__ setting META ")
 
         self.method = t_req.method.upper()
         self.META['PATH_INFO'] = path_info
@@ -86,7 +88,7 @@ class TornadoRequest(http.HttpRequest):
         self.META['SERVER_NAME'] = host_parts[0]
         self.META['SERVER_PORT'] = host_parts[1]
         self.META['REQUEST_METHOD'] = self.method
-        logger.debug("TornadoRequest::__init__  META set %s", self.META)
+        # logger.debug("TornadoRequest::__init__  META set %s", self.META)
 
         _, content_params = cgi.parse_header(t_headers.get('CONTENT_TYPE', ''))
         if 'charset' in content_params:
@@ -137,10 +139,11 @@ class TornadoRequest(http.HttpRequest):
 
     @cached_property
     def COOKIES(self):
-        logger.debug("TornadoRequest COOKIES %s",
-                     self.tornado_request.cookies)
-        logger.debug("TornadoRequest COOKIES %s",
-                     http.parse_cookie(self.tornado_request.cookies))
+        logger.debug("TornadoRequest COOKIES")
+        # logger.debug("TornadoRequest COOKIES %s",
+        #              self.tornado_request.cookies)
+        # logger.debug("TornadoRequest COOKIES %s",
+        #              http.parse_cookie(self.tornado_request.cookies))
         return http.parse_cookie(self.tornado_request.cookies)
 
     def _get_files(self):
@@ -209,7 +212,8 @@ class TornadoHandler(base.BaseHandler):
         :return:
         :rtype:
         """
-        logger.debug("TornadoHandler __call__ %s", t_req)
+        logger.debug("TornadoHandler __call__()")
+        # logger.debug("TornadoHandler __call__ %s", t_req)
         self._when_finished = on_finish
         self.tornado_request = t_req
         self.tornado_future = None
@@ -267,7 +271,8 @@ class TornadoHandler(base.BaseHandler):
         :return:
         :rtype:
         """
-        logger.debug("_apply_request_middleware request: %s", request)
+        # logger.debug("_apply_request_middleware request: %s", request)
+        logger.debug("_apply_request_middleware request")
         urlresolvers.set_urlconf(self.urlconf)
 
         response = None
@@ -293,8 +298,9 @@ class TornadoHandler(base.BaseHandler):
             # Dig out the original request.
             raise Exception("Holly Smokes!")
 
-        logger.debug("_apply_request_middleware returning: %s: %s",
-                     response, dir(response))
+        # logger.debug("_apply_request_middleware returning: %s: %s",
+        #              response, dir(response))
+        logger.debug("_apply_request_middleware returning: %s: %s")
         return response
     # _apply_request_middleware()
 
