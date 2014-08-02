@@ -30,5 +30,8 @@ in no way stable and won't be for a little while.
 * Enable fully asynchronous Django views!
     * Support Tornado's `gen.coroutine` decorator on Django views
         * Initial is done and works but is still crude.
+    * Allow a Django response to be returned as a Future
 * Enable asynchronous tasks easily without using an external service like Celery.
 * Enable asynchronous timers to execute code at a given time or interval.
+* Support Websockets, async of course.
+* Tests, get some tests in place.
