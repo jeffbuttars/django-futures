@@ -13,7 +13,7 @@ import sys
 import cgi
 import codecs
 import warnings
-from io import BytesIO
+import types
 
 from tornado.concurrent import TracebackFuture
 
@@ -26,9 +26,8 @@ from django.core import urlresolvers
 from django.core.handlers import base
 from django.utils import datastructures
 from django.utils.functional import cached_property
-from django.http.response import HttpResponse
 from django.core.urlresolvers import set_script_prefix
-from django.core.exceptions import MiddlewareNotUsed, PermissionDenied, SuspiciousOperation
+from django.core.exceptions import PermissionDenied, SuspiciousOperation
 try:
     from django.utils.deprecation import RemovedInDjango19Warning
 except ImportError:
@@ -37,7 +36,7 @@ except ImportError:
 
 from django_futures.core.handlers.df import LimitedStream
 
-from django.utils.encoding import force_str, force_text
+from django.utils.encoding import force_text
 # Do we need this? I hope not, but wsgi uses it.
 # from threading import Lock
 
