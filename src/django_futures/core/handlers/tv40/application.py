@@ -39,13 +39,15 @@ class DjangoFuturesRequestHandler(tornado.web.RequestHandler):
         self._dj_handler = self._dj_handler_class(self)
 #     # __init__()
 
-#     def _execute_method(self):
-#         logger.debug("DjangoFuturesRequestHandler::_execute_method")
-#         if not self._finished:
-#             self._when_complete(self.django_handle_request(*self.path_args, **self.path_kwargs),
-#                                 self._execute_finish)
-
     def prepare(self):
+        """
+        We do a little funny buisiness here, we set the 
+        reqeust.method to 'django_handle_request' since we've
+        bipassed the url lookup. We set it back when it's called.
+        Normally, this would be an HTTP method mapped to a handler
+        method  like get() or post(). But we'll Django figure out 
+        the method stuff, so we don't care.
+        """
         logger.debug("DjangoFuturesRequestHandler::prepare() ")
         self.request.orig_method = self.request.method
         self.request.method = 'django_handle_request'
@@ -53,13 +55,6 @@ class DjangoFuturesRequestHandler(tornado.web.RequestHandler):
 
     def django_handle_request(self, *args, **kwargs):
         """todo: Docstring for django_handle_request
-
-        :param \*args: arg description
-        :type \*args: type description
-        :param \*\*kwargs: arg description
-        :type \*\*kwargs: type description
-        :return:
-        :rtype:
         """
 
         # logger.debug(("DjangoFuturesRequestHandler::django_handle_request()"
@@ -67,6 +62,7 @@ class DjangoFuturesRequestHandler(tornado.web.RequestHandler):
         #              args, kwargs)
         logger.debug("DjangoFuturesRequestHandler::django_handle_request()")
 
+        # Set the method back to what it was before the call
         self.request.method = self.request.orig_method
 
         # Now use the Django handler to run the request through Django
@@ -83,7 +79,7 @@ class DjangoFuturesRequestHandler(tornado.web.RequestHandler):
             # The request is finished being processed. Return the Future
             # to Tornado which will handle the Future until it's completed.
             logger.debug(("DjangoFuturesRequestHandler::django_handle_request()"
-                        "Got a future"))
+                          "Got a future"))
             return response
 
         # The _dj_handler will call django_finish_request if it finishes before
@@ -165,31 +161,31 @@ class _DjangoRequestDispatcher(tornado.web._RequestDispatcher):
         self.handler_class = DjangoFuturesRequestHandler
         self.handler_kwargs = {}
 
-    def headers_received(self, start_line, headers):
-        logger.debug("_DjangoRequestDispatcher:headers_received()")
-        # logger.debug("_DjangoRequestDispatcher:headers_received() start_line: %s, headers: %s",
-        #             start_line, headers)
-        return super(_DjangoRequestDispatcher, self).headers_received(start_line, headers)
+    # def headers_received(self, start_line, headers):
+    #     logger.debug("_DjangoRequestDispatcher:headers_received()")
+    #     # logger.debug("_DjangoRequestDispatcher:headers_received() start_line: %s, headers: %s",
+    #     #             start_line, headers)
+    #     return super(_DjangoRequestDispatcher, self).headers_received(start_line, headers)
 
-    def set_request(self, request):
-        # logger.debug(
-        #     "_DjangoRequestDispatcher:set_request() request: %s", request)
-        logger.debug("_DjangoRequestDispatcher:set_request()")
-        super(_DjangoRequestDispatcher, self).set_request(request)
+    # def set_request(self, request):
+    #     # logger.debug(
+    #     #     "_DjangoRequestDispatcher:set_request() request: %s", request)
+    #     logger.debug("_DjangoRequestDispatcher:set_request()")
+    #     super(_DjangoRequestDispatcher, self).set_request(request)
 
-    def data_received(self, data):
-        # logger.debug("_DjangoRequestDispatcher:data_received() data: %s", data)
-        logger.debug("_DjangoRequestDispatcher:data_received() ")
-        return super(_DjangoRequestDispatcher, self).data_received(data)
+    # def data_received(self, data):
+    #     # logger.debug("_DjangoRequestDispatcher:data_received() data: %s", data)
+    #     logger.debug("_DjangoRequestDispatcher:data_received() ")
+    #     return super(_DjangoRequestDispatcher, self).data_received(data)
 
-    def execute(self):
-        """todo: Docstring for execute
-        :return:
-        :rtype:
-        """
-        logger.debug("_DjangoRequestDispatcher:execute()")
-        return super(_DjangoRequestDispatcher, self).execute()
-    # execute()
+    # def execute(self):
+    #     """todo: Docstring for execute
+    #     :return:
+    #     :rtype:
+    #     """
+    #     logger.debug("_DjangoRequestDispatcher:execute()")
+    #     return super(_DjangoRequestDispatcher, self).execute()
+    # # execute()
 # _DjangoRequestDispatcher
 
 
@@ -205,11 +201,6 @@ class DjangoApplication(tornado.web.Application):
         """
         logger.debug("args: %s, kwargs: %s",
                      args, kwargs)
-
-        # Add our Django handler
-        # self._django_handlers = [
-        #     (r'.*', DjangoFuturesRequestHandler),
-        # ]
 
         logger.debug(" static_url: %s, static_path: %s",
                      settings.STATIC_URL, settings.STATIC_ROOT)
@@ -232,14 +223,4 @@ class DjangoApplication(tornado.web.Application):
         logger.debug("connection %s", connection)
         # Modern HTTPServer interface
         return _DjangoRequestDispatcher(self, connection)
-
-    def add_handlers(self, host_pattern, host_handlers):
-        logger.debug("")
-
-    def _load_ui_modules(self, modules):
-        logger.debug("")
-
-    def _load_ui_methods(self, methods):
-        logger.debug("")
-
 # DjangoApplication

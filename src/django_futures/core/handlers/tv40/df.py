@@ -15,7 +15,7 @@ import codecs
 import warnings
 import types
 
-from tornado.concurrent import TracebackFuture, is_future
+from tornado.concurrent import is_future
 
 
 from django import http
@@ -524,7 +524,7 @@ class TornadoHandler(base.BaseHandler):
 
         # ### Handle the Future
         # Always return Futures back the IOLoop without further processing.
-        if isinstance(response, TracebackFuture):
+        if is_future(response):
             logger.debug("response is TracebackFuture, return it")
             return response
 
