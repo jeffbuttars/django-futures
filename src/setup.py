@@ -4,9 +4,11 @@
 import setuptools
 from setuptools import setup, find_packages
 
+import django_futures
+
 
 setup(name='django-futures',
-      version='0.1.0.0',
+      version=django_futures.__version__,
       description="Django asynchronous views and Tornado integration made easy.",
       author="Jeff Buttars",
       author_email="jeffbuttars@gmail.com",

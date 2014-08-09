@@ -18,3 +18,18 @@ cheese:
 
 cheesewheel:
 	$(MAKE) -C src $@
+
+build:
+	$(MAKE) -C src $@
+
+run:
+	$(MAKE) -C devproject $@
+
+runpkg:
+	$(MAKE) -C devproject $@
+
+rundbg:
+	$(MAKE) -C devproject $@
+
+runpkgdbg:
+	$(MAKE) -C devproject $@

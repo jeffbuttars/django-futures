@@ -1,9 +1,8 @@
 # version is a human-readable version number.
 
-# version_info is a four-tuple for programmatic comparison. The first
-# three numbers are the components of the version number.  The fourth
-# is zero for an official release, positive for a development branch,
-# or negative for a release candidate or beta (after the base version
-# number has been incremented)
-version = "0.1"
-version_info = (0, 1, 0, 1)
+# http://legacy.python.org/dev/peps/pep-0440/#version-scheme
+# Use the pep-0440 as a versioning guidline
+# There are always four parts, although trailing parts 'may' be empty.
+# Idealy the first 3 parts will always have a value
+__version__ = "0.1.0.dev1"
+__version_info__ = ('0', '1', '0', 'dev1')
