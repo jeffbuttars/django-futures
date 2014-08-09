@@ -1,10 +1,19 @@
 Django Futures
 ==============
 
+
 Asynchronous views and Tornado integration for Django
 
 This is currently in heavy development and the master branch is 
 in no way stable and won't be for a little while.
+
+# Install
+
+**Development Release, Proceed With Low Expectations!**
+This release is untested and proof of concept only.
+
+As only a pre-release is available at this time, you must explicitly tell `pip` it's ok to install.  
+`pip install --pre django-futures`
 
 # Features
 * Use Tornado directly with Django (NO WSGI)

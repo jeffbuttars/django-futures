@@ -11,8 +11,9 @@ build:
 cheese:
 	python setup.py sdist upload
 
-cheesewheel:
-	python setup.py bdist_wheel upload
+# Use the wheel if have optional C extensions
+# cheesewheel:
+#     python setup.py sdist bdist_wheel upload
 
 clean:
 	rm -fr dist
