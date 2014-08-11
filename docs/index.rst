@@ -1,10 +1,3 @@
-.. title:: DjangoFutures
-
-DjangoFutures
-=========================================
-
-Contents:
-
 .. toctree::
   :maxdepth: 2
 
@@ -14,6 +7,14 @@ Contents:
   httpclient
   tasks
   sources
+
+.. title:: DjangoFutures
+
+DjangoFutures
+=========================================
+
+Contents:
+
 
 Indices and tables
 ==================
