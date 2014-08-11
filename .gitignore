@@ -5,4 +5,4 @@ dist/
 sdist/
 tags
 build/
-django_tornado.egg-info/
+src/django_futures.egg-info/
