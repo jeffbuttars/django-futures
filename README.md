@@ -7,7 +7,7 @@ Asynchronous views and Tornado integration for Django
 This is currently in heavy development and the master branch is 
 in no way stable and won't be for a little while.
 
-[Documentation](http://docs.django-futures.com)
+[Documentation](http://docs.djangofutures.com)
 
 # Install
 
