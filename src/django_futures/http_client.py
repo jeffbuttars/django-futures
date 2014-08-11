@@ -5,7 +5,7 @@
 ==================
 
 This is a 'smart' HTTPClient wrapper that also makes requests
-a bit simpler by borrowing much from the 'requests' module.
+a bit simpler by borrowing conventions from the 'requests' module.
 
 If a tornado IOLoop is running, then async requests are made.
 Otherwise, tornado's ``run_sync()`` method is used to make the

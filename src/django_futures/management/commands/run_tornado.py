@@ -3,6 +3,23 @@
 
 ``run_tornado.py`` -- ``run_tornado``
 ===========================================
+
+Django Futures includes in a management command for easily running the
+Tornado web server with Django. Running Tornado is necessary for utilizing
+the asynchronous features of Django Futures.
+
+The ``run_tornado`` management command supports the same options as Django's
+builtin
+`runserver <https://docs.djangoproject.com/en/dev/ref/django-admin/#runserver-port-or-address-port>`_
+command plus some Tornado specific options.
+
+The extra options offered by ``run_tornado``:
+-----------------------------------------------------
+
+* `--gzip` Enable Tornado's gzip
+* `--save_traceback` Enable Tornado's save_traceback and print a traceback
+* `--static` Enable Tornado's static file handling
+* `--static_hash_cache` Enable Tornado's static_hash_cache option
 """
 
 from optparse import make_option
