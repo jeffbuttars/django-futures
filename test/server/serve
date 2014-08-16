@@ -1,0 +1,40 @@
+#!/bin/bash
+# 08/15/2014
+
+
+THIS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+LOGDIR="$THIS_DIR/logs"
+PIDFILE="$LOGDIR/nginx.pid"
+CONF="$THIS_DIR/nginx.conf"
+
+
+mkdir -p "$LOGDIR"
+
+check_pid()
+{
+    if [[ ! -f $PIDFILE ]]; then
+        echo "No pid file present, giving up."
+        exit 1
+    fi
+} #check_pid
+
+
+if [[ $1 == "start" ]]; then
+
+    if [[ -f $PIDFILE ]]; then
+        echo "PID file exists, not starting."
+        exit 1
+    fi
+
+    nginx -p $PWD -c "$CONF"
+    cat $PIDFILE
+elif [[ $1 == "stop" ]]; then
+    check_pid
+    kill -s SIGTERM $(cat $PIDFILE)
+elif [[ $1 == "restart" ]]; then
+    check_pid
+    kill -s SIGHUP $(cat $PIDFILE)
+    cat $PIDFILE
+else
+    echo "$0 <start|stop|restart>"
+fi

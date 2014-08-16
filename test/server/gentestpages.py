@@ -16,6 +16,7 @@ import hashlib
 import os
 import json
 import datetime
+import argparse
 
 FMAPS = [
     {
@@ -44,6 +45,42 @@ FMAPS = [
     },
 ]
 
+INDEX_TMPL = """
+<html>
+<head>
+    <title>Django Futures Test Data</title>
+    <meta charset="utf-8" />
+    <style>
+        ul {{
+            line-height:23px;
+        }}
+        li {{
+            list-style-type: none;
+        }}
+        li a.data-link {{
+            display: inline-block;
+            width: 7em;
+        }}
+    </style>
+</head>
+    <div>
+        <ul>
+            {file_list}
+        </ul>
+    </div>
+<body>
+</body>
+</html>
+"""
+
+
+def sizeof_fmt(num):
+    for x in ['bytes', 'KB', 'MB', 'GB']:
+        if num < 1024.0 and num > -1024.0:
+            return "%3.1f%s" % (num, x)
+        num /= 1024.0
+    return "%3.1f%s" % (num, 'TB')
+
 
 def touchopen(fname, *args, **kwargs):
     fd = os.open(fname, os.O_RDWR | os.O_CREAT | os.O_TRUNC)
@@ -52,7 +89,7 @@ def touchopen(fname, *args, **kwargs):
 
 
 def write_bytes(num_bytes, fbase):
-    print("write_bytes", num_bytes, fbase)
+    print("write_bytes", sizeof_fmt(num_bytes), fbase)
 
     fn = "%s.txt" % num_bytes
     fname = os.path.join(fbase, fn)
@@ -97,11 +134,36 @@ def write_listed(fmap, fbase):
 
 
 def main():
-    out_dir = 'data_pages'
+    parser = argparse.ArgumentParser(
+        "gentestpages",
+        description=("Generate test files for Django Futures test server")
+    )
+    
+    parser.add_argument('-o', '--outdir',
+                        default='testfiles',
+                        help=("Output directory for testfiles")
+                        )
+    
+    # parser.add_argument('-b',
+    #                     '--boolean-option',
+    #                     default=False, action='store_true',
+    #                     help=("Some nice help for this option")
+    #                     )
+    
+    # # positional argument
+    # parser.add_argument('pos',
+    #                     default=None,
+    #                     nargs="?",
+    #                     help=("Some nice help for this option")
+    #                     )
+    
+    args = parser.parse_args()
+
+    out_dir = args.outdir
 
     try:
         os.makedirs(out_dir)
-    except FileExistsError:
+    except OSError:
         pass
 
     result_list = []
@@ -121,6 +183,16 @@ def main():
 
     with open(fname, 'w') as fd:
         fd.write(json.dumps(file_data, sort_keys=True, indent=2))
+    # end for fmap in FMAPS
+
+    li_fmt = ("<li><a class=\"data-link\" href=\"{file_name}\">{size}</a> "
+              "<span class=\"data-hash\">{sha256}</span></li>")
+    fname = os.path.join(out_dir, 'index.html')
+    with open(fname, 'w') as fd:
+        file_list = '\n'.join(
+            [li_fmt.format(size=sizeof_fmt(int(x['file_name'].split('.')[0])), **x)
+             for x in result_list])
+        fd.write(INDEX_TMPL.format(file_list=file_list))
     # end for fmap in FMAPS
 # main()
 
