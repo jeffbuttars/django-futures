@@ -43,7 +43,12 @@ class TestAsyncHttpClient(BaseTemplateView):
         num = int(request.GET.get('num_clients', 10))
 
         # Go and grab some web pages, asynchronously
+        mclients = num
+        if num > 100:
+            num = 100
+
         http_client = HttpClient()
+        http_client.configure('tornado.httpclient.AsyncHTTPClient', max_clients=mclients)
 
         start_time = datetime.datetime.now()
         res = yield [http_client.get(TEST_HOST + '/51200.txt') for x in range(num)]
