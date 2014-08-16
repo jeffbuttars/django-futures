@@ -8,6 +8,9 @@ import logging
 logger = logging.getLogger('django.debug')
 
 
+TEST_HOST = "http://localhost:9000"
+
+
 class Index(BaseTemplateView):
     pass
 # Index
@@ -21,7 +24,7 @@ class TestHttpClient(BaseTemplateView):
 class TestAsyncHttpClient(BaseTemplateView):
 
     template_name = "test_async_httpclient.html"
-    num_client_options = (1, 5, 10, 25, 50, 100)
+    num_client_options = (1, 5, 10, 25, 50, 100, 250, 500, 1000)
 
     @gen.coroutine
     def get(self, request):
@@ -43,7 +46,7 @@ class TestAsyncHttpClient(BaseTemplateView):
         http_client = HttpClient()
 
         start_time = datetime.datetime.now()
-        res = yield [http_client.get('http://yahoo.com') for x in xrange(num)]
+        res = yield [http_client.get(TEST_HOST + '/51200.txt') for x in range(num)]
         finish_time = datetime.datetime.now()
 
         web_results = []
