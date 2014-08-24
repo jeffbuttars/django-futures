@@ -335,10 +335,12 @@ class TornadoHandler(base.BaseHandler):
         :return:
         :rtype:
         """
-        logger.debug("_call_view request: %s", request)
+        logger.debug("_call_view request: %s, callback: %s",
+                     request, self.callback)
 
         if response is None:
             wrapped_callback = self.make_view_atomic(self.callback)
+            logger.debug("_call_view wrapped_callback: %s", wrapped_callback)
             try:
                 response = wrapped_callback(request, *self.callback_args, **self.callback_kwargs)
             except Exception as e:

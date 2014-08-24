@@ -1,5 +1,5 @@
 import datetime
-from tornado import gen
+from django_futures.decorators import coroutine
 from django_futures.http_client import HttpClient
 from django.views.generic import TemplateView
 from core.views import BaseTemplateView
@@ -23,7 +23,7 @@ class TestAsyncHttpClient(BaseTemplateView):
     template_name = "test_async_httpclient.html"
     num_client_options = (1, 5, 10, 25, 50, 100)
 
-    @gen.coroutine
+    @coroutine
     def get(self, request):
         """todo: Docstring for get
 
@@ -36,14 +36,18 @@ class TestAsyncHttpClient(BaseTemplateView):
         :return:
         :rtype:
         """
-        logger.debug("Start VIEW")
+        logger.debug("Start VIEW TestAsyncHttpClient::get()")
         num = int(request.GET.get('num_clients', 10))
 
         # Go and grab some web pages, asynchronously
         http_client = HttpClient()
 
         start_time = datetime.datetime.now()
-        res = yield [http_client.get('http://yahoo.com') for x in xrange(num)]
+        res = yield [
+            http_client.get('http://cradlepoint.com',
+                            connect_timeout=60.0,
+                            request_timeout=60.0,
+                           ) for x in range(num)]
         finish_time = datetime.datetime.now()
 
         web_results = []
@@ -74,6 +78,7 @@ class TestAsyncHttpClient(BaseTemplateView):
 
         myres = super(TestAsyncHttpClient, self).get(request, **ctx)
         logger.debug("Done with view, returning Django response")
-        request.render(myres)
+        return myres
+        # request.render(myres)
     # get()
 # TestAsyncHttpClient

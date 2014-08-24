@@ -3,6 +3,13 @@
 
 ``decorators.py`` -- Simplifiy Asynchronous Code
 ================================================
+
+We have the following decorators available:
+
+* ``coroutine`` Used to create views that support asynchronous behavior
+* ``ttask`` Creates function or method that will be run at a later time on the same process.
+* ``ctask`` Same as ``ttask`` except the task is also a coroutine
+
 """
 
 import logging
@@ -10,7 +17,67 @@ logger = logging.getLogger('django')
 
 import functools
 from tornado.ioloop import IOLoop
-from tornado import gen
+from tornado.gen import coroutine
+
+
+class django_coroutine(object):
+    """
+    *Not Implemented!*
+
+    The behavior of ``django_coroutine`` is the same as that of ``coroutine``
+    with the exception that Django responses can be returned as in a normal
+    Django view. For example:
+
+    .. code-block:: python
+
+        from django_futures.decorators import django_coroutine
+        from django_futures.http_client import HttpClient
+        from django.views.generic import TemplateView
+        from core.views import BaseTemplateView
+
+        class TestAsyncHttpClient(BaseTemplateView):
+
+            template_name = "test_async_httpclient.html"
+
+            @django_coroutine
+            def get(self, request):
+                # Here we make an asynchrounous web call using the asynchrounous
+                # aware web client available with Django Futures
+
+                # Go and grab a web page asynchronously
+                http_client = HttpClient()
+
+                res = yield http_client.get('http://yahoo.com')
+                ctx = {
+                    'web_response': res
+                }
+
+                # Build a Django response
+                myres = super(TestAsyncHttpClient, self).get(request, **ctx)
+
+                # In an asynchronous view, we must render a Django response using
+                # the render() method of the request object.
+                return myres
+            # get()
+        # TestAsyncHttpClient
+    """
+
+    def __init__(self):
+        """todo: to be defined """
+        raise NotImplementedError
+    # __init__()
+
+    def __call__(self, view):
+        """todo: Docstring for __call__
+        
+        :param view: arg description
+        :type view: type description
+        :return:
+        :rtype:
+        """
+        raise NotImplementedError
+    # __call__()
+# django_coroutine
 
 class ttask(object):
     """
@@ -135,9 +202,9 @@ class ctask(object):
     Creates a :py:class:`ttask` using a method/function that is also a Tornado coroutine.
 
     This is a convenience decorator and is equivelant to decorting a function with
-    @tornado.gen.coroutine and @ttask()
+    @coroutine and @ttask()
 
-    :py:class:`ctask` will run the tornado.gen.coroutine on the decorated function first
+    :py:class:`ctask` will run the coroutine on the decorated function first
     then decorate it with :py:class:`ttask`.
 
     For example, use this if you have a task that needs to make asynchronous http client
@@ -161,6 +228,6 @@ class ctask(object):
 
     def __call__(self, func):
         tt = ttask(*self._args, **self._kwargs)
-        return tt(gen.coroutine(func))
+        return tt(coroutine(func))
     #__call__()
 #ctask

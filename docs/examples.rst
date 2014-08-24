@@ -13,7 +13,6 @@ Here is a simple asynchronous view that fetches a web page.
     class TestAsyncHttpClient(BaseTemplateView):
 
         template_name = "test_async_httpclient.html"
-        num_client_options = (1, 5, 10, 25, 50, 100)
 
         @gen.coroutine
         def get(self, request):

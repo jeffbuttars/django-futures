@@ -30,8 +30,10 @@ class HttpClient(object):
         self._ioloop = tornado.ioloop.IOLoop.current()
 
         if self._ioloop._running:
+            logger.debug("Using AsyncHTTPClient")
             self._hc = AsyncHTTPClient(*args, **kwargs)
         else:
+            logger.debug("Using SyncHttpClient")
             self._hc = SyncHttpClient(*args, **kwargs)
     #__init__()
 
