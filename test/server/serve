@@ -6,9 +6,22 @@ THIS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 LOGDIR="$THIS_DIR/logs"
 PIDFILE="$LOGDIR/nginx.pid"
 CONF="$THIS_DIR/nginx.conf"
+NTMP="$THIS_DIR/tmp"
+BODY_CACHE="$NTMP/nginx/body"
 
+# DEF_ARGS="--http-client-body-temp-path=$BODY_CACHE"
+DEF_ARGS=""
 
-mkdir -p "$LOGDIR"
+NGINX=$(which nginx)
+
+if [[ -z $NGINX ]]; then
+    echo "Make sure Ngnix is installed and the nginx command is in your path."
+    exit 1
+fi
+
+NGINX="$NGINX $DEF_ARGS"
+
+mkdir -p "$LOGDIR" "$NTMP" "$BODY_CACHE"
 
 check_pid()
 {
@@ -18,23 +31,43 @@ check_pid()
     fi
 } #check_pid
 
-
-if [[ $1 == "start" ]]; then
-
+start_nginx()
+{
     if [[ -f $PIDFILE ]]; then
         echo "PID file exists, not starting."
         exit 1
     fi
 
-    nginx -p $PWD -c "$CONF"
-    cat $PIDFILE
-elif [[ $1 == "stop" ]]; then
+    $NGINX -p $PWD -c "$CONF" "$@"
+    if [[ $? == 0 ]]; then
+        cat $PIDFILE
+    fi
+} #start_nginx
+
+stop_nginx()
+{
     check_pid
     kill -s SIGTERM $(cat $PIDFILE)
-elif [[ $1 == "restart" ]]; then
+} #stop_nginx
+
+restart_nginx()
+{
     check_pid
     kill -s SIGHUP $(cat $PIDFILE)
     cat $PIDFILE
+} #restart_nginx
+
+
+if [[ $1 == "start" ]]; then
+    start_nginx
+elif [[ $1 == "stop" ]]; then
+    stop_nginx
+elif [[ $1 == "restart" ]]; then
+    restart_nginx
 else
     echo "$0 <start|stop|restart>"
+    echo "No option given, starting nginx in the foreground with master mode off."
+    echo "To run Nginx in the background, run '$0 start'"
+    echo "You can stop Nginx with CTRL-C"
+    start_nginx -g "daemon off; master_process off;"
 fi
